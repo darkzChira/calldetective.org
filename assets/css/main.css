@@ -22,6 +22,7 @@
   --md-sys-color-surface-container-low: {{ .Site.Params.colors.surface_container_low }};
 
   --md-sys-color-outline: {{ .Site.Params.colors.outline }};
+  --md-sys-color-error: {{ .Site.Params.colors.error }};
 
   --md-sys-typescale-body-medium-size: 1.2rem;
   --md-sys-typescale-body-medium-line-height: 2rem;

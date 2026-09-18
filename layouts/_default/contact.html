@@ -1,0 +1,142 @@
+{{ define "main" }}
+  <main id="contact-page" class="page contact-page">
+    <section class="contact-hero fullbleed">
+      <figure>
+        <img
+          srcset="
+            {{- range $index, $source := .Params.hero.sources -}}
+              {{- if $index }},{{ end }}{{ $source.src }} {{ $source.width }}
+            {{- end -}}
+          "
+          src="{{ .Params.hero.image }}"
+          sizes="100vw"
+          alt="{{ .Params.hero.alt }}"
+        />
+      </figure>
+      <a class="contact-home" href="{{ .Params.home_link.url }}">{{ .Params.home_link.label }}</a>
+      <div class="contact-hero-overlay">
+        <h1>{{ .Title }}</h1>
+        <p>{{ .Params.hero.subtitle }}</p>
+      </div>
+    </section>
+
+    <section class="contact-content fullbleed">
+      <div class="contact-layout">
+        <div class="contact-intro">
+          <p class="section-label">{{ .Params.intro.eyebrow }}</p>
+          <h2>{{ .Params.intro.heading }}</h2>
+          {{ .Content }}
+        </div>
+
+        <form
+          class="contact-form"
+          name="{{ .Params.form.name }}"
+          method="{{ .Params.form.method }}"
+          action="{{ .Params.form.action }}"
+          data-netlify="true"
+          netlify-honeypot="{{ .Params.form.honeypot.name }}"
+        >
+          <input type="hidden" name="form-name" value="{{ .Params.form.name }}" />
+          <p class="form-honeypot">
+            <label>
+              {{ .Params.form.honeypot.label }}
+              <input name="{{ .Params.form.honeypot.name }}" />
+            </label>
+          </p>
+
+          {{ range .Params.form.fields }}
+            <div class="form-field">
+              <label for="{{ .id }}">
+                {{ .label }}{{ with .hint }} <span>{{ . }}</span>{{ end }}
+              </label>
+              {{ if eq .element "textarea" }}
+                <textarea
+                  id="{{ .id }}"
+                  name="{{ .name }}"
+                  rows="{{ .rows }}"
+                  {{ if .required }}required{{ end }}
+                ></textarea>
+              {{ else }}
+                <input
+                  id="{{ .id }}"
+                  name="{{ .name }}"
+                  type="{{ .type }}"
+                  {{ with .autocomplete }}autocomplete="{{ . }}"{{ end }}
+                  {{ if .required }}required{{ end }}
+                />
+              {{ end }}
+            </div>
+          {{ end }}
+
+          <button
+            class="contact-submit"
+            type="submit"
+            data-submitting-label="{{ .Params.form.submitting_label }}"
+          >
+            {{ .Params.form.submit_label }}
+          </button>
+
+          <div
+            id="contact-success"
+            class="form-alert form-alert-success"
+            role="status"
+            tabindex="-1"
+            hidden
+          >
+            {{ .Params.form.alerts.success }}
+          </div>
+          <div
+            id="contact-failure"
+            class="form-alert form-alert-failure"
+            role="alert"
+            tabindex="-1"
+            hidden
+          >
+            {{ .Params.form.alerts.failure }}
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector(".contact-form");
+        const submitButton = form.querySelector(".contact-submit");
+        const successAlert = form.querySelector("#contact-success");
+        const failureAlert = form.querySelector("#contact-failure");
+        const submitLabel = submitButton.textContent.trim();
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          successAlert.hidden = true;
+          failureAlert.hidden = true;
+          submitButton.disabled = true;
+          submitButton.textContent = submitButton.dataset.submittingLabel;
+
+          try {
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+              method: form.method,
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: new URLSearchParams(formData).toString(),
+            });
+
+            if (!response.ok) {
+              throw new Error(response.statusText);
+            }
+
+            form.reset();
+            successAlert.hidden = false;
+            successAlert.focus();
+          } catch (error) {
+            failureAlert.hidden = false;
+            failureAlert.focus();
+          } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = submitLabel;
+          }
+        });
+      });
+    </script>
+  </main>
+{{ end }}
