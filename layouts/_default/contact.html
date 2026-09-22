@@ -4,76 +4,84 @@
       <figure>
         <img
           srcset="
-            {{- range $index, $source := .Params.hero.sources -}}
-              {{- if $index }},{{ end }}{{ $source.src }} {{ $source.width }}
-            {{- end -}}
+            /hero-image-1280w.webp 1280w,
+            /hero-image-1920w.webp 1920w,
+            /hero-image-2560w.webp 2560w,
+            /hero-image-3840w.webp 3840w
           "
-          src="{{ .Params.hero.image }}"
+          src="/hero-image-1920w.webp"
           sizes="100vw"
-          alt="{{ .Params.hero.alt }}"
+          alt="Landscape photograph of the Australian outback plains with a lone tree in the foreground and mountains in the distance"
         />
       </figure>
-      <a class="contact-home" href="{{ .Params.home_link.url }}">{{ .Params.home_link.label }}</a>
+      <a class="contact-home" href="/">← Call Detective</a>
       <div class="contact-hero-overlay">
-        <h1>{{ .Title }}</h1>
-        <p>{{ .Params.hero.subtitle }}</p>
+        <h1>Contact us</h1>
+        <p>Let’s talk about your ecoacoustics project.</p>
       </div>
     </section>
 
     <section class="contact-content fullbleed">
       <div class="contact-layout">
         <div class="contact-intro">
-          <p class="section-label">{{ .Params.intro.eyebrow }}</p>
-          <h2>{{ .Params.intro.heading }}</h2>
-          {{ .Content }}
+          <p class="section-label">Get in touch</p>
+          <h2>Start a conversation</h2>
+          <p>
+            Interested in creating a Call Detective website, or have a question
+            about an existing project? Send us a message and our team will get
+            back to you.
+          </p>
         </div>
 
         <form
           class="contact-form"
-          name="{{ .Params.form.name }}"
-          method="{{ .Params.form.method }}"
-          action="{{ .Params.form.action }}"
+          name="contact"
+          method="POST"
+          action="/"
           data-netlify="true"
-          netlify-honeypot="{{ .Params.form.honeypot.name }}"
+          netlify-honeypot="bot-field"
         >
-          <input type="hidden" name="form-name" value="{{ .Params.form.name }}" />
+          <input type="hidden" name="form-name" value="contact" />
           <p class="form-honeypot">
             <label>
-              {{ .Params.form.honeypot.label }}
-              <input name="{{ .Params.form.honeypot.name }}" />
+              Don’t fill this out if you’re human:
+              <input name="bot-field" />
             </label>
           </p>
 
-          {{ range .Params.form.fields }}
-            <div class="form-field">
-              <label for="{{ .id }}">
-                {{ .label }}{{ with .hint }} <span>{{ . }}</span>{{ end }}
-              </label>
-              {{ if eq .element "textarea" }}
-                <textarea
-                  id="{{ .id }}"
-                  name="{{ .name }}"
-                  rows="{{ .rows }}"
-                  {{ if .required }}required{{ end }}
-                ></textarea>
-              {{ else }}
-                <input
-                  id="{{ .id }}"
-                  name="{{ .name }}"
-                  type="{{ .type }}"
-                  {{ with .autocomplete }}autocomplete="{{ . }}"{{ end }}
-                  {{ if .required }}required{{ end }}
-                />
-              {{ end }}
-            </div>
-          {{ end }}
+          <div class="form-field">
+            <label for="contact-name">Name</label>
+            <input id="contact-name" name="name" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="form-field">
+            <label for="contact-email">Email</label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" required />
+          </div>
+
+          <div class="form-field">
+            <label for="contact-organisation">Organisation <span>(optional)</span></label>
+            <input
+              id="contact-organisation"
+              name="organisation"
+              type="text"
+              autocomplete="organization"
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="contact-message">
+              How can we help? Tell us about your call detective project idea
+            </label>
+            <textarea id="contact-message" name="message" rows="7" required></textarea>
+          </div>
 
           <button
             class="contact-submit"
             type="submit"
-            data-submitting-label="{{ .Params.form.submitting_label }}"
+            data-submitting-label="Sending…"
           >
-            {{ .Params.form.submit_label }}
+            Send message
           </button>
 
           <div
@@ -83,7 +91,7 @@
             tabindex="-1"
             hidden
           >
-            {{ .Params.form.alerts.success }}
+            Message received. We’ll get back to you soon.
           </div>
           <div
             id="contact-failure"
@@ -92,7 +100,7 @@
             tabindex="-1"
             hidden
           >
-            {{ .Params.form.alerts.failure }}
+            There was a problem sending your message. Please try again.
           </div>
         </form>
       </div>
