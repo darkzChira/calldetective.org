@@ -23,6 +23,14 @@
       {{- end }}
     {{- end }}
 
+    {{ if eq .Layout "contact" }}
+      {{- with resources.Get "css/contact.css" }}
+        {{- with . | minify | fingerprint }}
+          <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+        {{- end }}
+      {{- end }}
+    {{ end }}
+
     <script
       type="module"
       src="https://unpkg.com/@layflags/rolling-number@1.0.0/rolling-number.js"
@@ -46,7 +54,7 @@
     {{ block "head" . }}{{ end }}
   </head>
 
-  <body>
+  <body{{ with .Layout }} class="layout-{{ . }}"{{ end }}>
     {{ block "main" . }}{{ end }}
   </body>
 </html>

@@ -43,6 +43,7 @@ params:
     on_surface_variant: "#1a1a1a"
 
     outline: "#6f7978"
+    error: "#b00020"
   showcase:
     - title: "Can you hear an Australasian Bittern"
       description: "The Eavesdropping on Wetland Birds project has been using Call Detective to validate australian bittern calls across a network of remote recording devices."
