@@ -1,0 +1,28 @@
+{{ $projectCount := len (default (slice) .Site.Params.showcase) }}
+<div class="how-it-works">
+  <h2 class="section-heading md-typescale-display-small">
+    How it <em class="accent">Works</em>
+  </h2>
+  <p class="section-lead md-typescale-body-large">
+    Get inspired by Ecoacoustic Tour of Australia by A2O, select a project from
+    {{ $projectCount }} available options, and verify calls. Your contribution
+    will directly benefit ecoacoustic research across Australia.
+  </p>
+
+  <ol class="steps">
+    <li class="md-typescale-title-medium">
+      <md-icon aria-hidden="true">counter_1</md-icon>
+      Select a Project
+    </li>
+    <li class="md-typescale-title-medium">
+      <md-icon aria-hidden="true">counter_2</md-icon>
+      Register/Login
+    </li>
+    <li class="md-typescale-title-medium">
+      <md-icon aria-hidden="true">counter_3</md-icon>
+      Verify Call
+    </li>
+  </ol>
+
+  {{- .Inner -}}
+</div>
