@@ -29,19 +29,26 @@
       <md-filled-tonal-button href="#projects">Verify Calls</md-filled-tonal-button>
     </div>
 
+    {{ $events := site.Params.stats.events }}
+    {{ $verifications := site.Params.stats.verifications }}
+    {{ $projects := len (default (slice) site.Params.showcase) }}
     <dl class="hero-stats">
       <div class="hero-stat">
         <dt class="md-typescale-title-medium">Events</dt>
-        <dd class="accent"><layflags-rolling-number>45071</layflags-rolling-number></dd>
+        <dd class="accent">
+          <layflags-rolling-number>{{ $events }}</layflags-rolling-number>
+        </dd>
       </div>
       <div class="hero-stat">
         <dt class="md-typescale-title-medium">Verifications</dt>
-        <dd class="accent"><layflags-rolling-number>21980</layflags-rolling-number></dd>
+        <dd class="accent">
+          <layflags-rolling-number>{{ $verifications }}</layflags-rolling-number>
+        </dd>
       </div>
       <div class="hero-stat">
         <dt class="md-typescale-title-medium">Projects</dt>
         <dd class="accent">
-          <layflags-rolling-number>{{ len (default (slice) site.Params.showcase) }}</layflags-rolling-number>
+          <layflags-rolling-number>{{ $projects }}</layflags-rolling-number>
         </dd>
       </div>
     </dl>

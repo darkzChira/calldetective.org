@@ -5,67 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
 
-    {{ $css := resources.Get "css/main.css" }}
-    {{- $css = $css | resources.ExecuteAsTemplate "css/main.css" . | css.Sass }}
+    {{ $main := resources.Get "css/main.css" | resources.ExecuteAsTemplate "css/main.css" . | css.Sass }}
+    {{ $cssFiles := slice $main
+      (resources.Get "css/resets.css")
+      (resources.Get "css/hero.css")
+      (resources.Get "css/home.css")
+      (resources.Get "css/contact.css")
+      (resources.Get "css/map.css")
+    }}
 
-    {{- with  $css }}
-      {{- with . | minify | fingerprint }}
-        <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-      {{- end }}
-    {{- end }}
-
-    {{ $cssReset := resources.Get "css/resets.css" }}
-    {{- $cssReset = $cssReset | resources.ExecuteAsTemplate "css/resets.css" . | css.Sass }}
-
-    {{- with  $cssReset }}
+    {{- with $cssFiles | resources.Concat "css/bundle.css" }}
       {{- with . | minify | fingerprint }}
         <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
       {{- end }}
     {{- end }}
 
     {{/*
-      Assets for the theme's map shortcode and its site cards, loaded only where
-      the map is used. Keep the web-components version in sync with the theme's
-      layouts/partials/head.html.
+      Map assets, loaded only where the map is used. media-controls.js
+      already registers <oe-spectrogram>, so it's the only script needed.
     */}}
     {{ if .HasShortcode "map" }}
-      {{- with resources.Get "css/map.css" }}
-        {{- with . | minify | fingerprint }}
-          <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-        {{- end }}
-      {{- end }}
       {{- with resources.Get "js/map-callout.js" }}
         {{- with . | minify | fingerprint }}
           <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
         {{- end }}
       {{- end }}
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@ecoacoustics/web-components@6.4.0/dist/components/spectrogram.js"></script>
       <script type="module" src="https://cdn.jsdelivr.net/npm/@ecoacoustics/web-components@6.4.0/dist/components/media-controls.js"></script>
-    {{ end }}
-
-    {{/* Shared hero (layouts/partials/hero.html) */}}
-    {{ if or .IsHome (eq .Layout "contact") }}
-      {{- with resources.Get "css/hero.css" }}
-        {{- with . | minify | fingerprint }}
-          <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-        {{- end }}
-      {{- end }}
-    {{ end }}
-
-    {{ if .IsHome }}
-      {{- with resources.Get "css/home.css" }}
-        {{- with . | minify | fingerprint }}
-          <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-        {{- end }}
-      {{- end }}
-    {{ end }}
-
-    {{ if eq .Layout "contact" }}
-      {{- with resources.Get "css/contact.css" }}
-        {{- with . | minify | fingerprint }}
-          <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-        {{- end }}
-      {{- end }}
     {{ end }}
 
     <script

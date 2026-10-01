@@ -159,7 +159,7 @@
   }
 }
 
-@media (width <= 1024px) {
+@media (max-width: 1024px) {
   .contact-layout {
     grid-template-columns: 1fr;
     gap: var(--micro-padding-large);

@@ -31,6 +31,11 @@ security:
       - "^GOOGLE_MAPS_API_KEY$"
       - "^GOOGLE_MAPS_MAP_ID$"
 params:
+  # Headline stats shown in the hero (layouts/partials/hero.html). Projects
+  # isn't listed here — it's counted from params.showcase automatically.
+  stats:
+    events: 45071
+    verifications: 21980
   map:
     sites:
       - campaign: "Daintree Rainforest Observatory"
