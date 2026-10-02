@@ -37,6 +37,8 @@ params:
     events: 45071
     verifications: 21980
   map:
+    # Theme default 4 is too tight to fit full Australia on mobile.
+    min_zoom: 3
     sites:
       - campaign: "Daintree Rainforest Observatory"
         latitude: -16.103236
@@ -84,19 +86,19 @@ params:
   showcase:
     - title: "Can you hear an Australasian Bittern"
       description: "The Eavesdropping on Wetland Birds project has been using Call Detective to validate australian bittern calls across a network of remote recording devices."
-      image: "/eavesdropping_homepage.jpg"
+      image: "/bittern.jpg"
       link: "https://bittern.calldetective.org/"
       eventCountFilter: ""
       verifiedCountFilter: ""
     - title: "Where are the Gang-gangs?"
       description: "Help Museums Victoria find and identify gang-gang cockatoos in their recordings."
-      image: "/gang_gang_homepage.jpg"
+      image: "/gang_gang.jpg"
       link: "https://gang-gangs.calldetective.org"
       eventCountFilter: ""
       verifiedCountFilter: ""
     - title: "Tassie Calling"
       description: "Protect Tasmania is working to build a stronger future for threatened species conservation by advancing the use of bioacoustic detection and monitoring across Tasmania."
-      image: "/tassie_calling_homepage.jpg"
+      image: "/tassie_calling.jpg"
       link: "https://tassie-calling.calldetective.org/"
       eventCountFilter: ""
       verifiedCountFilter: ""

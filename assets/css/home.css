@@ -65,12 +65,20 @@
     padding: var(--micro-padding-medium);
     border-radius: 16px;
     background-color: var(--md-sys-color-surface-container-high);
+
+    @media (max-width: 36em) {
+      max-width: none;
+      width: 100vw;
+      margin-inline: calc(50% - 50vw);
+      padding: 0;
+      border-radius: 0;
+    }
   }
 
   /* Theme map shortcode overrides */
   .map {
     --map-min-height: min(40rem, 65vw);
-    --map-min-height-mobile: 25rem;
+    --map-min-height-mobile: min(20rem, 80vw);
   }
 
   .map-onboarding-callout {
@@ -93,6 +101,15 @@
     border-radius: 12px;
     background: var(--md-sys-color-surface-container-lowest);
     box-shadow: none;
+
+    @media (max-width: 48em) {
+      max-height: calc(100dvh - 3rem);
+      overflow-y: auto;
+
+      &:not(.map-onboarding-callout) {
+        width: 14rem;
+      }
+    }
   }
 
   .map-callout-close {
@@ -121,7 +138,7 @@
   .site-callout-image {
     display: block;
     width: 100%;
-    height: 8%;
+    height: 127px;
     object-fit: cover;
   }
 
@@ -215,7 +232,7 @@
 
   .project-card-media {
     display: block;
-    aspect-ratio: 16 / 9;
+    height: 170px;
     overflow: hidden;
 
     img {
