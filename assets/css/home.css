@@ -103,9 +103,6 @@
     box-shadow: none;
 
     @media (max-width: 48em) {
-      max-height: calc(100dvh - 3rem);
-      overflow-y: auto;
-
       &:not(.map-onboarding-callout) {
         width: 14rem;
       }
